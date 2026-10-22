@@ -49,6 +49,10 @@ environment variables as the scripts; for example:
 make train DATA_BASE=outputs/training_data/[scene]
 make infer CKPT=checkpoints/vbench_sweep
 ```
+Run the CPU-safe regression tests with:
+```
+make test
+```
 Optionally install FlashAttention
 ```
 pip install flash-attn --no-build-isolation

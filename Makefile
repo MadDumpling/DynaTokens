@@ -7,7 +7,7 @@ HF_TOKEN ?=
 DATA_BASE ?=
 CKPT ?=
 
-.PHONY: help setup setup-flash-attn models submodules prepare train infer vbench worldscore camera
+.PHONY: help setup setup-flash-attn models submodules test prepare train infer vbench worldscore camera
 
 help: ## Show available developer commands
 >@awk 'BEGIN {FS = ":.*##"} /^[a-zA-Z0-9_.-]+:.*##/ {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
@@ -24,6 +24,9 @@ models: ## Download HY-WorldPlay and FLUX checkpoints (requires HF_TOKEN)
 
 submodules: ## Initialize and update git submodules
 >git submodule update --init --recursive
+
+test: ## Run the CPU-safe pytest suite
+>python -m pytest $(PYTEST_ARGS)
 
 prepare: ## Encode training data; pass PREPARE_ARGS="..."
 >PYTHONPATH=model/hywp python dynatokens/prepare_training_data.py $(PREPARE_ARGS)
